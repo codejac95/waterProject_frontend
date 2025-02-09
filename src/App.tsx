@@ -53,7 +53,7 @@ const TemperatureHumidityMoistureFetcher = () => {
 // }
 
 const fetchAllData = async () => {
-  const response = await fetch("http://192.168.1.69/getData");
+  const response = await fetch("http://192.168.1.69/getAllData");
   if (!response.ok) {
     throw new Error('Failed to fetch Data');
   }
