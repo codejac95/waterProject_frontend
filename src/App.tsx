@@ -53,8 +53,7 @@ const TemperatureHumidityMoistureFetcher = () => {
 // }
 
 const fetchAllData = async () => {
-  const response = await fetch("https://cors-anywhere.herokuapp.com/http://81.234.87.5:5000/getAllData");
-
+  const response = await fetch("https://81.234.87.5:5000/getAllData");
   if (!response.ok) {
     throw new Error('Failed to fetch Data');
   }
