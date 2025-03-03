@@ -9,65 +9,57 @@ const TemperatureHumidityMoistureFetcher = () => {
   const [temperature, setTemperature] = useState<number | null>(null);
   const [humidity, setHumidity] = useState<number | null>(null);
   const [moisture, setMoisture] = useState<number | null>(null);
-  // const [avgTemperature, setAvgTemperature] = useState<number | null>(null);
-  // const [avgHumidity, setAvgHumidity] = useState<number | null>(null);
-  // const [avgMoisture, setAvgMoisture] = useState<number | null>(null);
+  const [avgTemperature, setAvgTemperature] = useState<number | null>(null);
+  const [avgHumidity, setAvgHumidity] = useState<number | null>(null);
+  const [avgMoisture, setAvgMoisture] = useState<number | null>(null);
 
-//   const fetchTemperature = async () => {
-//       const response = await fetch("http://192.168.1.69/getTemperature");
-//       if (!response.ok) {
-//         throw new Error('Failed to fetch temperature');
-//       }
-//       const temperature: number = await response.json();
-//       setTemperature(temperature);
-//   };
+  const fetchTemperature = async () => {
+      const response = await fetch("http://192.168.1.69/getTemperature");
+      if (!response.ok) {
+        throw new Error('Failed to fetch temperature');
+      }
+      const temperature: number = await response.json();
+      setTemperature(temperature);
+  };
 
-//   const fetchHumidity = async () => {
-//       const response = await fetch("http://192.168.1.69/getHumidity");
-//       if (!response.ok) {
-//         throw new Error("Failed to fetch humidity");
-//       }
-//       const humidity: number = await response.json();
-//       setHumidity(humidity);
-//   };
+  const fetchHumidity = async () => {
+      const response = await fetch("http://192.168.1.69/getHumidity");
+      if (!response.ok) {
+        throw new Error("Failed to fetch humidity");
+      }
+      const humidity: number = await response.json();
+      setHumidity(humidity);
+  };
 
-//   const fetchMoisture = async () => {
-//     const response = await fetch("http://192.168.1.69/getMoisture");
-//     if (!response.ok) {
-//       throw new Error("Failed to fetch moisture");
-//     }
-//     const moisture: number = await response.json();
-//     setMoisture(moisture);
-// };
-
-// const fetchAverageData  = async () => {
-//   const response = await fetch("http://192.168.1.69/getAverageData")
-//   if(!response.ok) {
-//     throw new Error("Failed to fetch averageData")
-//   }
-//   const avgData: {temperature: number, humidity: number, moisture: number}
-//   = await response.json();
-//   setAvgTemperature(avgData.temperature);
-//   setAvgHumidity(avgData.humidity);
-//   setAvgMoisture(avgData.moisture);
-// }
-
-const fetchAllData = async () => {
-  const response = await fetch("https://81.234.87.5:5000/getAllData");
-  if (!response.ok) {
-    throw new Error('Failed to fetch Data');
-  }
-  const data = await response.json();
-  setTemperature(data.temperature);
-  setHumidity(data.humidity);
-  setMoisture(data.moisture);
+  const fetchMoisture = async () => {
+    const response = await fetch("http://192.168.1.69/getMoisture");
+    if (!response.ok) {
+      throw new Error("Failed to fetch moisture");
+    }
+    const moisture: number = await response.json();
+    setMoisture(moisture);
 };
+
+const fetchAverageData  = async () => {
+  const response = await fetch("http://192.168.1.69/getAverageData")
+  if(!response.ok) {
+    throw new Error("Failed to fetch averageData")
+  }
+  const avgData: {temperature: number, humidity: number, moisture: number}
+  = await response.json();
+  setAvgTemperature(avgData.temperature);
+  setAvgHumidity(avgData.humidity);
+  setAvgMoisture(avgData.moisture);
+}
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetchAllData();
-     // await fetchAverageData();
+      await fetchAverageData();
+      await fetchTemperature();
+      await fetchHumidity();
+      await fetchMoisture();
     };
+    
     fetchData();
     const intervalid = setInterval(fetchData,30000);
     return () => clearInterval(intervalid);
@@ -121,12 +113,12 @@ const fetchAllData = async () => {
               />
             </p>
           </div>
-          {/* <div id = "averageData">
+          { <div id = "averageData">
             <h2>7 days average:</h2>            
               <p style = {{color:'orange'}}> Temperature: {displayValue(avgTemperature)} °C </p>  
               <p style = {{color:'blue'}}>  Humidity: {displayValue(avgHumidity)} % </p> 
               <p style = {{color:'green'}}>  Soil moistue: {displayValue(avgMoisture)} %</p>      
-          </div> */}
+          </div> }
         </div>
         <img id="tomato" src={tomato} alt="tomato" />
       </div>
